@@ -15,6 +15,10 @@ import {
 } from "../controllers/user.js";
 
 import {
+    dashboard,
+} from "../controllers/dashboard.js";
+
+import {
     addItems,
     getItem,
     updateItem,
@@ -113,8 +117,8 @@ router.get("/api/billstatus", getAllBills);
 router.put("/api/billstatus/:id", updateBillStatus);
 router.put("/api/billstatus/paid/:id", updateBillPaid);
 router.put("/api/billstatus/cancel/:id", cancelBillStatus);
-
-
+//////////////////////bc///////////////////
+router.get("/api/dashboard", dashboard);
 
 
 
