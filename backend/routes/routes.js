@@ -65,7 +65,21 @@ router.put("/api/foods/:id", updateFood);
 // delete Food
 router.delete("/api/foods/:id", deleteFood);
 
+////////////////////////// CATEGORY ////////////////////////////////
+// get all Category
+router.get("/api/category", showCategory);
 
+// get single Category
+router.get("/api/category/:id", showCategoryById);
+
+// create Category
+router.post("/api/category", createCategory);
+
+// update Category
+router.put("/api/category/:id", updateCategory);
+
+// delete Food
+router.delete("/api/category/:id", deleteCategory);
 
 ////////////////////////// USER ////////////////////////////////
 // get all user
