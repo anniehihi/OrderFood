@@ -1,7 +1,7 @@
 <template>
     <div class="admin-container">
         <div class="d-flex justify-content-between">
-            <h1>Hello Admin!</h1>
+            <h1>{{ dashboard.count_food }}</h1>
             <button class="btn" @click="handleLogout()">Logout</button>
         </div>
 
@@ -71,10 +71,12 @@ export default {
             showOrderDetails: false,
             sendId: undefined,
             interval: "",
+            dashboard: {}
         }
     },
 
     created() {
+        this.getDashboard()
         this.getAllBills();
         if (!this.admin) {
             this.$router.push("/");
@@ -99,6 +101,10 @@ export default {
 
     methods: {
         ...mapMutations(["setAdmin"]),
+
+        async getDashboard() {
+          this.dashboard = (await axios.get('/dashboard')).data;
+        },
 
         async getAllBills() {
             this.allBills = (await axios.get('/billstatus')).data;
