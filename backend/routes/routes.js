@@ -10,6 +10,14 @@ import {
 } from "../controllers/food.js";
 
 import {
+    showCategory,
+    showCategoryById,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+} from "../controllers/category.js";
+
+import {
     showAUser,
     createAccount
 } from "../controllers/user.js";
