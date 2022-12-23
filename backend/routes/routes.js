@@ -24,6 +24,7 @@ import {
 
 import {
     dashboard,
+    chart
 } from "../controllers/dashboard.js";
 
 import {
@@ -141,6 +142,7 @@ router.put("/api/billstatus/paid/:id", updateBillPaid);
 router.put("/api/billstatus/cancel/:id", cancelBillStatus);
 //////////////////////bc///////////////////
 router.get("/api/dashboard", dashboard);
+router.get("/api/chart", chart);
 
 
 
