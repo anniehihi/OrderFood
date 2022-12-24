@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <NavBarAdmin></NavBarAdmin>
     <div class="admin-container">
       <div>
         <div class="row">
@@ -72,6 +74,7 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 
@@ -80,9 +83,10 @@ import axios from "axios";
 import { mapMutations } from "vuex";
 import Doughnut from "@/components/Doughnut";
 import BarChart from "@/components/BarChart";
+import NavBarAdmin from "@/components/NavBarAdmin";
 export default {
     name: 'Dashboard',
-    components: {Doughnut, BarChart},
+    components: {Doughnut, BarChart, NavBarAdmin},
     data() {
         return {
             dashboard: {},
@@ -168,5 +172,9 @@ export default {
 
 .action-btn:hover {
     background-color: #27ae60;
+}
+.inner {
+  color: #fff;
+  font-weight: 600;
 }
 </style>

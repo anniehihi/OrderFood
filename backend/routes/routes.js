@@ -76,19 +76,19 @@ router.delete("/api/foods/:id", deleteFood);
 
 ////////////////////////// CATEGORY ////////////////////////////////
 // get all Category
-router.get("/api/category", showCategory);
+router.get("/api/categorys", showCategory);
 
 // get single Category
-router.get("/api/category/:id", showCategoryById);
+router.get("/api/categorys/:id", showCategoryById);
 
 // create Category
-router.post("/api/category", createCategory);
+router.post("/api/categorys", createCategory);
 
 // update Category
-router.put("/api/category/:id", updateCategory);
+router.put("/api/categorys/:id", updateCategory);
 
 // delete Food
-router.delete("/api/category/:id", deleteCategory);
+router.delete("/api/categorys/:id", deleteCategory);
 
 ////////////////////////// USER ////////////////////////////////
 // get all user

@@ -1,10 +1,7 @@
 <template>
+  <div>
+    <NavBarAdmin></NavBarAdmin>
   <div class="admin-container">
-    <div class="d-flex justify-content-between">
-      <h1>{{ dashboard.count_foods }}</h1>
-      <button class="btn" @click="handleLogout()">Logout</button>
-    </div>
-
     <div class="table-responsive">
       <table class="table colored-header datatable project-list">
         <thead>
@@ -54,14 +51,17 @@
       </table>
     </div>
   </div>
+  </div>
 </template>
 
 
 <script>
 import axios from "axios";
+import NavBarAdmin from "@/components/NavBarAdmin";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: 'Dashboard',
+  components: {NavBarAdmin },
   data() {
     return {
       avaiableStatus: ["cancel", "confirmed", "preparing", "checking", "delivering", "delivered", "completed"],
