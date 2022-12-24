@@ -10,9 +10,22 @@ import {
 } from "../controllers/food.js";
 
 import {
+    showCategory,
+    showCategoryById,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+} from "../controllers/category.js";
+
+import {
     showAUser,
     createAccount
 } from "../controllers/user.js";
+
+import {
+    dashboard,
+    chart
+} from "../controllers/dashboard.js";
 
 import {
     addItems,
@@ -61,7 +74,21 @@ router.put("/api/foods/:id", updateFood);
 // delete Food
 router.delete("/api/foods/:id", deleteFood);
 
+////////////////////////// CATEGORY ////////////////////////////////
+// get all Category
+router.get("/api/categorys", showCategory);
 
+// get single Category
+router.get("/api/categorys/:id", showCategoryById);
+
+// create Category
+router.post("/api/categorys", createCategory);
+
+// update Category
+router.put("/api/categorys/:id", updateCategory);
+
+// delete Food
+router.delete("/api/categorys/:id", deleteCategory);
 
 ////////////////////////// USER ////////////////////////////////
 // get all user
@@ -113,8 +140,9 @@ router.get("/api/billstatus", getAllBills);
 router.put("/api/billstatus/:id", updateBillStatus);
 router.put("/api/billstatus/paid/:id", updateBillPaid);
 router.put("/api/billstatus/cancel/:id", cancelBillStatus);
-
-
+//////////////////////bc///////////////////
+router.get("/api/dashboard", dashboard);
+router.get("/api/chart", chart);
 
 
 

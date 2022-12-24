@@ -27,7 +27,7 @@ export const getFoodById = (id,result) => {
 
 // insert Food
 export const insertFood = (data,result) => {
-    db.query("INSERT INTO food SET ?",data, (err,results)=> {
+    db.query("INSERT INTO food SET ? ",data, (err,results)=> {
         if (err){
             console.log(err);
             result(err,null);
