@@ -2,10 +2,15 @@
   <div>
     <NavBarAdmin></NavBarAdmin>
     <div class="admin-container">
+      <h1 class="mx-2 text-center">Add Food</h1>
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label>Name</label>
           <input v-model.trim="food.food_name" type="text" class="form-control">
+        </div>
+        <div class="mb-2">
+          <label>Image</label>
+          <input class="form-control" type="file">
         </div>
         <div class="form-group">
           <label>Price</label>
@@ -27,6 +32,7 @@
           <label for="exampleFormControlTextarea1">Description</label>
           <textarea v-model="food.food_desc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
+        <button class="btn btn-secondary mr-2" @click="$router.go(-1)">Back</button>
         <button class="btn" type="submit">Submit</button>
       </form>
     </div>
@@ -88,5 +94,19 @@ export default {
   height: 100vh;
   padding: 2rem 9%;
   font-size: 16px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea
+{
+  padding: 20px!important;
+}
+.btn-secondary{
+  padding: .7rem 1.8rem;
+  font-size: 1.7rem;
+  cursor: pointer;
+  color: #fff;
+  border-radius: .5rem;
+  background-color: #615E5EFF;
 }
 </style>

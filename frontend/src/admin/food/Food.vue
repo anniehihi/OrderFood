@@ -22,7 +22,7 @@
           <tr v-for="(b) in allFoods" :key="b.food_id">
             <td>{{ b.food_id }}</td>
             <td><router-link :to="'/admin/food/'+b.food_id">{{ b.food_name }}</router-link></td>
-            <td><img src="../../assets/images/taco/taco-1.jpg" width="100" height="100"></td>
+            <td><img :src="require('../../assets/images/'+ b.food_src)" width="100" height="100"></td>
             <td>{{ b.food_star }}</td>
             <td>{{ b.food_desc }}</td>
             <td>
@@ -51,7 +51,7 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
     this.getAllFoods()
   },
 
