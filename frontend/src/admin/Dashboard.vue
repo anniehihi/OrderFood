@@ -1,102 +1,106 @@
 <template>
+  <div>
+    <NavBarAdmin></NavBarAdmin>
     <div class="admin-container">
-        <div class="d-flex justify-content-between">
-            <h1>{{ dashboard.count_food }}</h1>
-            <button class="btn" @click="handleLogout()">Logout</button>
-        </div>
+      <div>
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{ dashboard.count_bills }}</h3>
 
+                <p>New Orders</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                <p>Bounce Rate</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>{{ dashboard.count_users }}</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>65</h3>
+
+                <p>Unique Visitors</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="box-chart">
         <div class="table-responsive">
-            <!-- PROJECT TABLE -->
-            <table class="table colored-header datatable project-list">
-                <thead>
-                    <tr>
-                        <th>Bill Id</th>
-                        <th>User Id</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>When</th>
-                        <th>Paid</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(b) in filterBills.slice().reverse()" :key="b.bill_id">
-                        <td>{{ b.bill_id }}</td>
-                        <td>{{ b.user_id }}</td>
-                        <td>{{ b.bill_phone }}</td>
-                        <td>{{ b.bill_address }}</td>
-                        <td>{{ b.bill_when }}</td>
-                        <td>{{ b.bill_paid }}</td>
-                        <td>${{ b.bill_total }}</td>
-                        <td>{{ avaiableStatus[b.bill_status] }}</td>
-                        <td>
-                            <button v-if="b.bill_status < 5" class="action-btn" @click="nextStatusBtn(b.bill_id)">
-                                {{ avaiableStatus[b.bill_status + 1] }}
-                            </button>
-
-                            <button v-if="b.bill_status == 1" class="cancel-btn" @click="cancelBtn(b.bill_id)">
-                                Cancel
-                            </button>
-
-                            <button v-else-if="b.bill_status == 5 && b.bill_paid == 'false'" class="paid-btn"
-                                @click="paidBtn(b.bill_id)">
-                                Paid
-                            </button>
-
-                            <button v-else-if="b.bill_status == 5 && b.bill_paid == 'true'" class="action-btn"
-                                @click="nextStatusBtn(b.bill_id)">
-                                {{ avaiableStatus[b.bill_status + 1] }}
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+          <Doughnut :dataChart="chart" v-if="loaded"></Doughnut>
         </div>
+        <div class="table-responsive">
+          <BarChart></BarChart>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 
 <script>
 import axios from "axios";
-import { mapState, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
+import Doughnut from "@/components/Doughnut";
+import BarChart from "@/components/BarChart";
+import NavBarAdmin from "@/components/NavBarAdmin";
 export default {
     name: 'Dashboard',
-
+    components: {Doughnut, BarChart, NavBarAdmin},
     data() {
         return {
-            avaiableStatus: ["cancel", "confirmed", "preparing", "checking", "delivering", "delivered", "completed"],
-            allBills: [],
-            showOrderDetails: false,
-            sendId: undefined,
-            interval: "",
-            dashboard: {}
+            dashboard: {},
+            chart: [],
+            loaded: false
         }
     },
 
-    created() {
+    mounted() {
+        this.getChart()
         this.getDashboard()
-        this.getAllBills();
-        if (!this.admin) {
-            this.$router.push("/");
-        }
-    },
-
-    mounted: function () {
-        this.autoUpdate();
-    },
-
-    beforeUnmount() {
-        clearInterval(this.interval)
-    },
-
-    computed: {
-        ...mapState(["allFoods", "admin"]),
-
-        filterBills: function () {
-            return this.allBills.filter((b) => b.bill_status < 6 && b.bill_status > 0);
-        },
+        // if (!this.admin) {
+        //     this.$router.push("/");
+        // }
     },
 
     methods: {
@@ -104,56 +108,25 @@ export default {
 
         async getDashboard() {
           this.dashboard = (await axios.get('/dashboard')).data;
+          this.loaded = true
         },
 
-        async getAllBills() {
-            this.allBills = (await axios.get('/billstatus')).data;
+        async getChart() {
+          this.chart = (await axios.get('/chart')).data;
         },
 
-        sendBillId: function (id) {
-            this.sendId = id
-            this.showOrderDetails = !this.showOrderDetails;
-        },
-
-        closeView: function () {
-            this.showOrderDetails = !this.showOrderDetails;
-        },
-
-        handleLogout: function () {
-            this.setAdmin("");
-        },
-
-        async nextStatusBtn(id) {
-            await axios.put('/billstatus/' + id);
-            this.getAllBills();
-        },
-
-        async paidBtn(id) {
-            await axios.put('/billstatus/paid/' + id);
-            this.getAllBills();
-        },
-
-        async cancelBtn(id) {
-            await axios.put('/billstatus/cancel/' + id);
-            this.getAllBills();
-        },
-
-        autoUpdate: function () {
-            this.interval = setInterval(function () {
-                this.getAllBills();
-            }.bind(this), 1000);
-        }
 
     },
 }
 </script>
 
-<style scoped>
+<style lang="css" scoped>
+@import "../assets/css/adminlte.min.css";
 .admin-container {
-    background-color: #fff;
     height: 100vh;
     padding: 2rem 9%;
     font-size: 16px;
+    background-color: #f4f6f9;
 }
 
 .project-list>tbody>tr>td {
@@ -164,9 +137,18 @@ export default {
     width: 22px;
     border: 1px solid #CCC;
 }
-
-.table-responsive {
+.box-chart {
+  display: flex;
+  justify-content: space-between;
+}
+.table-responsive:last-child {
     margin-top: 8vh;
+    width: 60%;
+    margin-left: 60px;
+}
+.table-responsive:first-child {
+  margin-top: 8vh;
+  width: 40%;
 }
 
 .action-btn,
@@ -190,5 +172,9 @@ export default {
 
 .action-btn:hover {
     background-color: #27ae60;
+}
+.inner {
+  color: #fff;
+  font-weight: 600;
 }
 </style>

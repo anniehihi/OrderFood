@@ -12,8 +12,10 @@ import Thank from '../pages/Thank.vue';
 import MyOrder from '../pages/MyOrder.vue';
 import Admin from '../admin/Admin.vue';
 import Dashboard from '../admin/Dashboard.vue';
-
-
+import Food from '../admin/food/Food.vue';
+import Order from '../admin/Order.vue';
+import FoodDetail from '../admin/food/FoodDetail.vue';
+import FoodForm from '../admin/food/FoodForm.vue';
 const routes = [
   {
     path: "/",
@@ -79,6 +81,26 @@ const routes = [
     path: "/admin/dashboard",
     name: "Dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/admin/order",
+    name: "Order",
+    component: Order,
+  },
+  {
+    path: "/admin/food",
+    name: "Food",
+    component: Food,
+  },
+  {
+    path: "/admin/food/:id",
+    name: "FoodDetail",
+    component: FoodDetail,
+  },
+  {
+    path: "/admin/food/create",
+    name: "FoodForm",
+    component: FoodForm,
   },
   {
     path: '/:pathMatch(.*)*',
